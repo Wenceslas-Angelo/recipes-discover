@@ -8,7 +8,7 @@ import GlobalStyles from './utils/globalStyles';
 
 function App() {
   return (
-    <div>
+    <div className="app">
       <GlobalStyles />
       <Header />
       <Routes>

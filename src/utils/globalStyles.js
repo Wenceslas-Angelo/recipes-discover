@@ -11,6 +11,14 @@ const GlobalStyles = createGlobalStyle`
    a{
     text-decoration: none;
    }
+
+   .app{
+    width: 90%;
+    margin: auto;
+    @media screen and (min-width: 768px) {
+    width: 80%
+  }
+   }
 `;
 
 export default GlobalStyles;

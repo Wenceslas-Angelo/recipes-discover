@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import colors from '../../utils/color';
 
 const HeaderStyles = styled.header`
-  padding: 20px;
+  padding: 20px 0;
   @media screen and (min-width: 768px) {
     display: flex;
     justify-content: space-between;
