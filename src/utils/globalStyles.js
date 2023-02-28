@@ -8,7 +8,9 @@ const GlobalStyles = createGlobalStyle`
         font-family: sans-serif;
     }
 
-   
+   a{
+    text-decoration: none;
+   }
 `;
 
 export default GlobalStyles;
