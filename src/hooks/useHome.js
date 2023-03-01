@@ -5,19 +5,18 @@ function useHome(searchTerm) {
   const [state, setState] = useState([]);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [loadMore, setLoadMore] = useState(false);
 
-  const fetchPopular = async () => {
+  const fetchRecipes = async (number, searchValue = '') => {
     try {
       setError(false);
       setLoading(true);
-
       const checkRecipes = localStorage.getItem('popular');
-      if (checkRecipes) {
+      if (!searchValue && checkRecipes) {
         setState(JSON.parse(checkRecipes));
       } else {
-        const data = await API.fetchPopular(12);
-        localStorage.setItem('popular', JSON.stringify(data.recipes));
-        setState(data.recipes);
+        const data = await API.fetchRecipes(number, searchValue);
+        setState(searchValue ? data.results : data.recipes);
       }
     } catch (err) {
       setError(true);
@@ -25,24 +24,24 @@ function useHome(searchTerm) {
     setLoading(false);
   };
 
-  const searchRecipes = async () => {
-    try {
-      setError(false);
-      setLoading(true);
-      const data = await API.fetchSearch(searchTerm, 12);
-      // console.log(data);
-      setState(data.results);
-    } catch (err) {
-      setError(true);
-    }
-    setLoading(false);
-  };
+  useEffect(() => {
+    setState([]);
+    fetchRecipes(12);
+  }, []);
 
   useEffect(() => {
-    searchTerm ? searchRecipes() : fetchPopular();
+    setState([]);
+    fetchRecipes(12, searchTerm);
   }, [searchTerm]);
 
-  return { state, error, loading };
+  useEffect(() => {
+    if (!loadMore) return;
+    setState([]);
+    fetchRecipes(12, searchTerm);
+    setLoadMore(false);
+  }, [loadMore, searchTerm]);
+
+  return { state, error, loading, setLoadMore };
 }
 
 export default useHome;

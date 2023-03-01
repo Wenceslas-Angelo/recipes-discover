@@ -7,9 +7,14 @@ import HeroBanner from '../components/HeroBanner';
 import Grid from '../components/Grid';
 import Thumbnail from '../components/Thumbnail';
 import Spinner from '../components/Spinner';
+import Button from '../components/Button';
+import { FaArrowRight } from 'react-icons/fa';
 
 function Home({ searchTerm }) {
-  const { state, loading } = useHome(searchTerm);
+  const { state, loading, setLoadMore, error } = useHome(searchTerm);
+
+  if (error) return <h1>ERROR</h1>;
+
   return (
     <>
       {!searchTerm && state[0] ? (
@@ -33,6 +38,13 @@ function Home({ searchTerm }) {
       </Grid>
 
       {loading && <Spinner />}
+      {!loading && (
+        <Button
+          text="Load other recipes"
+          icon={<FaArrowRight />}
+          callback={() => setLoadMore(true)}
+        />
+      )}
     </>
   );
 }
