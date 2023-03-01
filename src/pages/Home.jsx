@@ -1,14 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import useHome from '../hooks/useHome';
+
 import HeroBanner from '../components/HeroBanner';
 import Grid from '../components/Grid';
-
-import useHome from '../hooks/useHome';
 import Thumbnail from '../components/Thumbnail';
+import Spinner from '../components/Spinner';
 
 function Home({ searchTerm }) {
-  const { state } = useHome(searchTerm);
+  const { state, loading } = useHome(searchTerm);
   return (
     <>
       {!searchTerm && state[0] ? (
@@ -30,6 +31,8 @@ function Home({ searchTerm }) {
           <Thumbnail key={recipe.id} image={recipe.image} />
         ))}
       </Grid>
+
+      {loading && <Spinner />}
     </>
   );
 }

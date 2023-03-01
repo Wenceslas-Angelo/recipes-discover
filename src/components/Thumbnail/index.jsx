@@ -12,7 +12,7 @@ function Thumbnail({ image }) {
 }
 
 Thumbnail.propTypes = {
-  image: PropTypes.string.isRequired,
+  image: PropTypes.string,
 };
 
 export default Thumbnail;
