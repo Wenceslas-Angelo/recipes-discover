@@ -10,8 +10,15 @@ function useHome(searchTerm) {
     try {
       setError(false);
       setLoading(true);
-      const data = await API.fetchPopular(12);
-      setState(data.recipes);
+
+      const checkRecipes = localStorage.getItem('popular');
+      if (checkRecipes) {
+        setState(JSON.parse(checkRecipes));
+      } else {
+        const data = await API.fetchPopular(12);
+        localStorage.setItem('popular', JSON.stringify(data.recipes));
+        setState(data.recipes);
+      }
     } catch (err) {
       setError(true);
     }
@@ -23,7 +30,7 @@ function useHome(searchTerm) {
       setError(false);
       setLoading(true);
       const data = await API.fetchSearch(searchTerm, 12);
-      console.log(data);
+      // console.log(data);
       setState(data.results);
     } catch (err) {
       setError(true);
