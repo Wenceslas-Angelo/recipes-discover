@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import API from '../utils/API';
 
-function useHome() {
-  const [popular, setPopular] = useState([]);
+function useHome(searchTerm) {
+  const [state, setState] = useState([]);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -11,18 +11,31 @@ function useHome() {
       setError(false);
       setLoading(true);
       const data = await API.fetchPopular(12);
-      setPopular(data.recipes);
+      setState(data.recipes);
     } catch (err) {
       setError(true);
-      console.log(err);
     }
+    setLoading(false);
+  };
+
+  const searchRecipes = async () => {
+    try {
+      setError(false);
+      setLoading(true);
+      const data = await API.fetchSearch(searchTerm, 12);
+      console.log(data);
+      setState(data.results);
+    } catch (err) {
+      setError(true);
+    }
+    setLoading(false);
   };
 
   useEffect(() => {
-    fetchPopular();
-  }, []);
+    searchTerm ? searchRecipes() : fetchPopular();
+  }, [searchTerm]);
 
-  return { popular, error, loading };
+  return { state, error, loading };
 }
 
 export default useHome;
