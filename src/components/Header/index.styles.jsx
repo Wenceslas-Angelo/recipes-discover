@@ -22,6 +22,26 @@ const HeaderStyles = styled.header`
       display: block;
     }
   }
+
+  .home-link {
+    color: black;
+    border: 1px solid black;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s linear;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    h2 {
+      padding-left: 5px;
+    }
+
+    &:hover {
+      background-color: black;
+      color: white;
+    }
+  }
 `;
 
 export default HeaderStyles;

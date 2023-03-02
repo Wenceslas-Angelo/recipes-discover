@@ -17,8 +17,8 @@ const apiSettings = {
     return dataJson;
   },
 
-  fetchSimilarRecipe: async (recipeId) => {
-    const endPoint = `${API_URL}${recipeId}/similar?apiKey=${API_KEY}`;
+  fetchSimilarRecipe: async (recipeId, number) => {
+    const endPoint = `${API_URL}${recipeId}/similar?apiKey=${API_KEY}&number=${number}`;
     const data = await fetch(endPoint);
     const dataJson = await data.json();
     return dataJson;
