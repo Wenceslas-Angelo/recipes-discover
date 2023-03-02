@@ -40,7 +40,7 @@ function Home({ searchTerm }) {
       {loading && <Spinner />}
       {!loading && (
         <Button
-          text="Load other recipes"
+          text="Load More"
           icon={<FaArrowRight />}
           callback={() => setLoadMore(true)}
         />

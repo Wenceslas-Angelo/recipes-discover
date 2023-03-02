@@ -6,17 +6,19 @@ function useHome(searchTerm) {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [loadMore, setLoadMore] = useState(false);
+  const [totalResults, setTotalResults] = useState(0);
 
   const fetchRecipes = async (number, searchValue = '') => {
     try {
       setError(false);
       setLoading(true);
       const checkRecipes = localStorage.getItem('popular');
-      if (!searchValue && checkRecipes) {
+      if (!loadMore && !searchValue && checkRecipes) {
         setState(JSON.parse(checkRecipes));
       } else {
         const data = await API.fetchRecipes(number, searchValue);
         setState(searchValue ? data.results : data.recipes);
+        setTotalResults(searchValue ? data.totalResults : 0);
       }
     } catch (err) {
       setError(true);
@@ -37,7 +39,9 @@ function useHome(searchTerm) {
   useEffect(() => {
     if (!loadMore) return;
     setState([]);
-    fetchRecipes(12, searchTerm);
+    searchTerm
+      ? fetchRecipes(totalResults, searchTerm)
+      : fetchRecipes(12, searchTerm);
     setLoadMore(false);
   }, [loadMore, searchTerm]);
 
